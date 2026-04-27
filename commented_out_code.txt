@@ -1,0 +1,28 @@
+# for school in different_schools:
+#     # select the school and year
+#     # we are choosing 2024 (latest year)
+#     # concat the crime data to the year
+#     school_city = school['city'].iloc[0]
+#     if school_city == "charlotte":
+#         school_city = 'charlotte-mecklenburg'
+#     filtered_df = crime_data[crime_data['Area Name'] == school_city]
+#     # extract county city
+#     if len(filtered_df) == 0:
+#         missing += 1
+#         missing_schools.append(school_city)
+#     elif len(filtered_df) == 1:
+#         found += 1
+#         found_schools.append(school_city)
+#         print("Shape of the filtered dataframe with the school found, should only be one")
+#         print(filtered_df)
+#         pd.concat(data,filtered_df)
+#     else:
+#         duplicate += 1
+#         duplicate_schools.append(school_city)
+# print(f"missing schools : {len(missing_schools)}")  
+# print(f"found schools : {len(found_schools)}")  
+
+	Unnamed: 0_x	school_code	name	grade_span	subject	grade	type	subgroup	num_tested	pct_notprof	pct_l3	pct_l4	pct_l5	pct_ccr	pct_glp	avg_score	county	ratio	city	city_merge_key	Unnamed: 0_y	Area Name	Area Type	Year	Violent Crime Total	Murder and nonnegligent manslaughter	Rape	Robbery	Aggravated assault	Property Crime Total	Burglary	Larceny-theft	Motor vehicle theft	"Arson
+"
+	Unnamed: 0_x	school_code	name	grade_span	subject	grade	type	subgroup	num_tested	pct_notprof	pct_l1	pct_l2	pct_l3	pct_l4	pct_l5	pct_ccr	county	ratio	city	city_merge_key	Unnamed: 0_y	Area Name	Area Type	Year	Violent Crime Total	Murder and nonnegligent manslaughter	Rape	Robbery	Aggravated assault	Property Crime Total	Burglary	Larceny-theft	Motor vehicle theft	"Arson
+"
