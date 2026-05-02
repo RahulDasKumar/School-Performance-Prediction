@@ -1,34 +1,50 @@
 from pyspark.sql import SparkSession
 import pandas as pd
 import seaborn as sns
-from pyspark.sql.types import StructType,StructField
+import matplotlib.pyplot as plt
+from pyspark.sql.types import StructType, StructField
 from pyspark.sql import functions as sf
-from pyspark.sql.functions import col,avg,round
-spark = SparkSession.builder.appName("MyAppName").getOrCreate()
-
-dataset = sns.load_dataset("titanic")
-
-df = spark.createDataFrame(dataset)
-
-df.createOrReplaceTempView("titanic")
-
-print(df.columns)
-df.show()
+from pyspark.sql.functions import col, avg, round
+from functools import cmp_to_key
 
 
-gender_survival = df.groupBy(["pclass","sex"]).agg({"fare":"avg"})
-# how can we see the gender differences for each class
-# which town had the most passengers
-most_popular_towns = df.groupBy("embarked").agg({"embarked":"count"})
+def ranking_based_on_variable(variable: str, top_k: int, descending=True):
+    data = pd.read_csv('inference_results_2.csv')
 
-gender_survival = df.groupBy("sex").agg({"survived":"avg"}).withColumn("survival_rate",round(col("avg(survived)") * 100, 2))
+    groups = [group for _, group in data.groupby(variable)]
 
-# which deck had the highest avg fair
+    sub_group_ranking = dict()
+    for group in groups:
+        group_type = group[variable].iloc[0]
+        sub_group_ranking[group_type] = group['residual'].mean()
 
-deck_ranking = df.groupBy("deck").agg({"fare":"avg"}).sort(sf.desc("avg(fare)"))
+    sorted_subgroup_ranking = dict(
+        sorted(sub_group_ranking.items(), key=lambda x: x[1], reverse=descending)
+    )
+
+    top_k_ranking = dict(list(sorted_subgroup_ranking.items())[:top_k])
+    print(top_k_ranking)
+
+    labels = list(top_k_ranking.keys())
+    values = list(top_k_ranking.values())
+    colors = ['#d9534f' if v < 0 else '#5b9bd5' for v in values]
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+    bars = ax.bar(labels, values, color=colors, edgecolor='white', linewidth=0.5)
+
+    ax.axhline(0, color='gray', linewidth=0.8, linestyle='--')
+    ax.set_xlabel(variable.capitalize(), fontsize=12)
+    ax.set_ylabel('Average Residual', fontsize=12)
+    ax.set_title(f'Average Residual by {variable.capitalize()} (Top {top_k})', fontsize=14)
+    ax.bar_label(bars, fmt='%.3f', padding=3, fontsize=10)
+    ax.spines[['top', 'right']].set_visible(False)
+
+    plt.tight_layout()
+    plt.savefig(f'ranking_{variable}.png', dpi=150)
+    plt.show()
+
+    return top_k_ranking
 
 
-# rank passeger classes
-passenger_rank = df.where(df.survived == 1).dropna(subset=['age']).groupBy("pclass").agg({"age":"avg"}).sort(sf.desc("avg(age)"))
-
-passenger_rank.show()
+if __name__ == "__main__":
+    ranking_based_on_variable("name", 5, False)
