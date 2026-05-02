@@ -7,6 +7,7 @@ https://drive.google.com/file/d/1dNzrGCqrasgCXYULYTrz12GscPmsrouz/view?usp=shari
     -  
   - `pip install -r requirements.txt`
   - Data Cleaning Process - `preprocess_data.py`
+  - Transform data to parquet `spark-flow.py`
   - Machine Learning Process - `training.py`
   - Streaming Process / Inference Process - `streaming.py`
   - Dashboard - `dashboard.py` command to run the dashboard(streamlit run dashboard.py)
