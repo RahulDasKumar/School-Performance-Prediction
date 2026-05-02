@@ -4,7 +4,9 @@ https://drive.google.com/file/d/1dNzrGCqrasgCXYULYTrz12GscPmsrouz/view?usp=shari
 
 # Steps to run the software
   - Download the data and upload to your repo
-    -  
+    -  [https://drive.google.com/drive/folders/1W2e3wtS2WUYNf54QMVUSpf5QA93Fw-hE](https://drive.google.com/file/d/1giI8MEjb8ZQHpC1eW5nrKkDwpivd-r_W/view?usp=sharing) - training-data
+    -  https://drive.google.com/drive/folders/1h35MVq38TGZH9BZXm9uDuJvLzOENkj8e?usp=sharing - school-data
+    -  https://drive.google.com/drive/folders/1l1S0fTsJn2APtnFMO-4i8XlcFx4ZRjoP?usp=sharing - data
   - `pip install -r requirements.txt`
   - Data Cleaning Process - `preprocess_data.py`
   - Transform data to parquet `spark-flow.py`
